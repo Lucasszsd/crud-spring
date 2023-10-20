@@ -1,7 +1,9 @@
 package pr.edu.unicesumar.crud.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pr.edu.unicesumar.crud.model.Pessoa;
+import pr.edu.unicesumar.crud.model.domain.Pessoa;
+import pr.edu.unicesumar.crud.model.repository.PessoaRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +12,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/pessoa")
 public class PessoaController {
 
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
     @GetMapping()
     public List<Pessoa> all(){
-        return mock();
+        return pessoaRepository.findAll();
 
     }
     @GetMapping("/{id}")
@@ -39,4 +44,18 @@ public class PessoaController {
         new Pessoa(6L, "Maria", "333")
         );
     }
+    @PutMapping
+    public void create(@RequestBody Pessoa novaPessoa){
+       Pessoa pessoa = new Pessoa(1L,novaPessoa.getNome(),novaPessoa.getDocumento()
+        );
+    }
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id ,@RequestBody Pessoa editPessoa){
+      Pessoa pessoa =   new Pessoa(id, editPessoa.getNome(), editPessoa.getDocumento());
+    }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        System.out.println("DELETADO");
+    }
+
 }
