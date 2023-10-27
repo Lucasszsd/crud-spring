@@ -17,4 +17,5 @@ public class Pessoa {
     private String nome;
     @Column(name = "doc", length = 14)
     private String documento;
+    private String userName;
 }
