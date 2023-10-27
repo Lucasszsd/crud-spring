@@ -10,6 +10,8 @@ import pr.edu.unicesumar.crud.model.domain.Pessoa;
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     Pessoa findByUserName(String userName);
+    @Query(" select p from Pessoa p " + " where p.nome = :name ")
+    Pessoa buscaPorNome(@Param("name") String nome);
 
 
 }
