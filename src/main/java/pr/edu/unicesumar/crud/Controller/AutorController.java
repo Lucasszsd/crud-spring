@@ -2,9 +2,9 @@ package pr.edu.unicesumar.crud.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pr.edu.unicesumar.crud.model.domain.Autor;
 import pr.edu.unicesumar.crud.model.repository.AutorRepository;
 
 @Controller
@@ -21,10 +21,23 @@ public class AutorController {
 
     }
 
-    @GetMapping("/form")
-    public ModelAndView create(){
+
+    @GetMapping("/novo")
+    public ModelAndView newAutor(){
         ModelAndView view = new ModelAndView("form-autor");
+        view.addObject("autor", new Autor());
         return view;
     }
 
+    @PostMapping
+    public String  create(Autor novoAutor){
+        autorRepository.save(novoAutor);
+        return "redirect:/autor";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id){
+        autorRepository.deleteById(id);
+        return "redirect:/autor";
+    }
 }
